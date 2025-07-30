@@ -1,0 +1,138 @@
+/* Background, Cards, Layout */
+.main-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3edf7 0%, #f5f8fd 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 0 rgba(46,68,133,0.10);
+  padding: 36px 16px;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.main-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #4051A0;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  margin-bottom: 1.5rem;
+}
+
+/* Retake Button Row */
+.retake-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+.retake-btn {
+  padding: 9px 24px;
+  background: #4F46E5;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: background .16s;
+}
+.retake-btn:hover {
+  background: #3730a3;
+}
+
+/* Capture Overlay */
+.overlay-bg {
+  position: fixed;
+  z-index: 1001;
+  inset: 0;
+  background: rgba(39, 46, 79, 0.74);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlay-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 28px 24px;
+  box-shadow: 0 4px 28px rgba(16,40,100,0.20);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.video-preview {
+  width: 320px;
+  height: 410px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 4px solid #CBD5E1;
+  box-shadow: 0 1.2px 12px rgba(128,140,180,0.17);
+  background: #f0f3fa;
+}
+.capture-btn {
+  padding: 10px 36px;
+  background: #4F46E5;
+  color: #fff;
+  font-size: 1.12rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background .18s;
+}
+.capture-btn:hover {
+  background: #312e81;
+}
+.overlay-tip {
+  color: #6b7280;
+  font-size: 0.93rem;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
+  justify-items: center;
+  padding: 32px 8px 0;
+}
+
+/* Try-On Card */
+.tryon-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px 0 rgba(128, 140, 180, 0.09);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 10px 10px;
+  width: 320px;
+}
+.tryon-canvas {
+  border-radius: 12px;
+  background: #f1f5f9;
+  border: 1.9px solid #d1d5db;
+  width: 300px;
+  height: 400px;
+  box-shadow: 0 1px 8px 0 rgba(128, 140, 180, 0.08);
+}
+.glasses-name {
+  margin-top: 10px;
+  color: #4051A0;
+  font-size: 1.07rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: -.12px;
+}
