@@ -31,6 +31,7 @@ function SingleTryOn({ userPhoto, glassesImage, name }) {
             .detectSingleFace(detCanvas, new faceapi.TinyFaceDetectorOptions())
             .withFaceLandmarks(true);
 
+          // Calculate aspect-fit, scale and offsets for drawing on DISPLAY canvas
           const aspectImg = sourceW / sourceH;
           const aspectDisp = DISPLAY_WIDTH / DISPLAY_HEIGHT;
           let drawWidth, drawHeight, offsetX, offsetY, scale;
@@ -62,19 +63,39 @@ function SingleTryOn({ userPhoto, glassesImage, name }) {
           };
 
           if (detection && detection.landmarks) {
+            // Robust: Average ALL eye points, not just 2 corners
             const leftEye = detection.landmarks.getLeftEye();
             const rightEye = detection.landmarks.getRightEye();
-            const eyeX = (leftEye[0].x + rightEye[3].x) / 2;
-            const eyeY = (leftEye[0].y + rightEye[3].y) / 2;
-            const eyeDist = Math.abs(rightEye[3].x - leftEye[0].x);
 
-            const glassesWidth = eyeDist * 2.2 * scale;
-            const glassesHeight = ((eyeDist * 2.2) / 2.2) * scale;
-            const gx = eyeX * scale + offsetX - glassesWidth / 2;
-            const gy = eyeY * scale + offsetY - glassesHeight / 2.3;
+            // Avg center of both eyes (good for tilted/angled faces)
+            const avgEye = [
+              (leftEye.reduce((sum, pt) => sum + pt.x, 0) / leftEye.length +
+                rightEye.reduce((sum, pt) => sum + pt.x, 0) / rightEye.length) /
+                2,
+              (leftEye.reduce((sum, pt) => sum + pt.y, 0) / leftEye.length +
+                rightEye.reduce((sum, pt) => sum + pt.y, 0) / rightEye.length) /
+                2,
+            ];
+
+            // Eye width: left-most to right-most
+            const leftMost = leftEye[0],
+              rightMost = rightEye[3];
+            const eyeDist = Math.hypot(
+              rightMost.x - leftMost.x,
+              rightMost.y - leftMost.y
+            );
+
+            // Map the detected features to the canvas space
+            const mappedEyeX = avgEye[0] * scale + offsetX;
+            const mappedEyeY = avgEye[1] * scale + offsetY;
+            const glassesWidth = eyeDist * 2.3 * scale; // Tweak 2.2–2.4 for your frame
+            const glassesHeight = glassesWidth / 2.2;
+            const gx = mappedEyeX - glassesWidth / 2;
+            const gy = mappedEyeY - glassesHeight / 2.2;
 
             drawGlasses(gx, gy, glassesWidth, glassesHeight);
           } else {
+            // fallback: center
             drawGlasses(
               DISPLAY_WIDTH / 2 - 75,
               DISPLAY_HEIGHT / 2 - 30,
@@ -117,6 +138,7 @@ export default function GlassesGallery({ userPhoto }) {
         <SingleTryOn
           key={idx}
           userPhoto={userPhoto}
+          // Always use your deployed backend for image URLs!
           glassesImage={`https://ar-eyewear-try-on-1.onrender.com${g.image}`}
           name={g.name}
         />
