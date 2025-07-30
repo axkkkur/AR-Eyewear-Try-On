@@ -69,13 +69,18 @@ function SingleTryOn({ userPhoto, glassesImage, name }) {
             const eyeDist = Math.abs(rightEye[3].x - leftEye[0].x);
 
             const glassesWidth = eyeDist * 2.2 * scale;
-            const glassesHeight = (eyeDist * 2.2 / 2.2) * scale;
+            const glassesHeight = ((eyeDist * 2.2) / 2.2) * scale;
             const gx = eyeX * scale + offsetX - glassesWidth / 2;
             const gy = eyeY * scale + offsetY - glassesHeight / 2.3;
 
             drawGlasses(gx, gy, glassesWidth, glassesHeight);
           } else {
-            drawGlasses(DISPLAY_WIDTH / 2 - 75, DISPLAY_HEIGHT / 2 - 30, 150, 60);
+            drawGlasses(
+              DISPLAY_WIDTH / 2 - 75,
+              DISPLAY_HEIGHT / 2 - 30,
+              150,
+              60
+            );
           }
         };
       } catch (e) {
@@ -83,7 +88,9 @@ function SingleTryOn({ userPhoto, glassesImage, name }) {
       }
     }
     run();
-    return () => { didCancel = true; };
+    return () => {
+      didCancel = true;
+    };
   }, [userPhoto, glassesImage]);
 
   return (
@@ -110,7 +117,7 @@ export default function GlassesGallery({ userPhoto }) {
         <SingleTryOn
           key={idx}
           userPhoto={userPhoto}
-          glassesImage={`http://localhost:5000${g.image}`}
+          glassesImage={`https://ar-eyewear-try-on-1.onrender.com${g.image}`}
           name={g.name}
         />
       ))}
