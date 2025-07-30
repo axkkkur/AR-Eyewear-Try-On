@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://ar-eyewear-try-on-1.onrender.com/api",
 });
 
 export const getProducts = () => API.get("/products");
