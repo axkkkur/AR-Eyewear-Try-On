@@ -8,7 +8,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/images", express.static("images"));
-
+app.get("/", (req, res) => {
+  res.send("AR Eyewear Try-On API is running!");
+});
 app.use("/api/products", productRoutes);
 const PORT = process.env.PORT || 5000;
 mongoose
